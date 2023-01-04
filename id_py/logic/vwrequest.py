@@ -47,8 +47,6 @@ class TokenReceiver:
     # the main method which returns the Bearer token
     def main(self) -> Token:
 
-        print(UrlConsts.ENTRY_POINT)
-
         # constants
         ENTRY_POINT = UrlConsts.ENTRY_POINT
         SESSION = self.SESSION
