@@ -12,6 +12,13 @@ No, I am not. Logging into the website is boring, takes a lot of time and the ce
 No elementary particle physics here (although I actually _am_ an elementary particle physicist, he he he hm - \*starres bashfully into the corner\*), but just the automization of veeeeeery time-consuming things. I guess, the time I spent doing this tool exceeds the time I will spend in total in order to retrieve the information about my ordered car, but I hope it saves _you_ a lot of time.
 
 
+## I am very interested in what the application is actually working. How can I understand that quite quickly?
+
+I recommend two code files:
+* If you are interested in the general workflow: `views.py`. Look into the function `number()` and read the comments.
+* If you are interested in how a token is retrieved etc: have a look into `vwrequest.py`
+
+
 ## How can I use this tool without installing it on my own machine?
 
 An instance is currently actively running on  
