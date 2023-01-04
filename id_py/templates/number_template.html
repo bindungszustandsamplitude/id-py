@@ -1,0 +1,45 @@
+<!-- disclaimer from the author: i'm not a web developer. -->
+<html>
+    <!-- style sheet -->
+    <style>
+        .all {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: large;
+            font-stretch: extra-expanded;
+        }
+        .quote { }
+    </style>
+
+    <!-- body -->
+    <body>
+        <div class="all">
+            {% if show != consts.SAD_MESSAGE and show != consts.NO_CAR_FOUND %}
+            <p><b>{{ consts.GOOD_NEWS }}</b></p>
+            {% endif %}
+            <p>{{ show }}</p>
+            {% if show == consts.SAD_MESSAGE %}
+            <p class="quote">
+                {{ consts.CHEERY_QUOTE }}
+                <br/>
+                <b>{{quote}}</b>
+            </p>
+            {% endif %}
+            {% if show != consts.NO_CAR_FOUND %}
+            <p>
+                Fahrzeug: {{car}} <br/>
+                Motor: {{engine}} <br/>
+                Modelljahr: {{model_year}} <br/><br/>
+                {% if specifications_present %}
+                <b>Ausgewählte Ausstattungsmerkmale:</b> <br/>
+                {{ software }} <br/>
+                {{ fertigungsablauf }}
+                {% endif %}
+                {% if not specifications_present %}
+                {{ consts.NO_SPECS_AVAIL }}
+                {% endif %}
+            </p>
+            {% endif %}
+            <p><a href="https://pastebin.com/KBzyn33B">FAQ</a></p>
+        </div>
+    </body>
+</html>
