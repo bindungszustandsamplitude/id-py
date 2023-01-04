@@ -39,6 +39,8 @@ class Quote(models.Model):
     def random_quote() -> str:
         objects = Quote.objects
         count = objects.count()
+        if count == 0:
+            return None
         rand_id = random.randint(1, count)
         return objects.filter(id=rand_id).get().quote
 
