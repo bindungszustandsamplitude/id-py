@@ -80,7 +80,7 @@ def number_concise(request: HttpRequest, number: str):
     token = Token.get_last()
 
     # if token is invalid, create a new one
-    if TokenTester(token).test() == False:
+    if token == None or TokenTester(token).test() == False:
         token: Token = TokenReceiver().main()
         token.save()
 
