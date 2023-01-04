@@ -31,15 +31,16 @@
                 Modelljahr: {{model_year}} <br/><br/>
                 {% if specifications_present %}
                 <b>Ausgewählte Ausstattungsmerkmale:</b> <br/>
-                {{ software }} <br/>
-                {{ fertigungsablauf }}
+                {% for spec in selected_specs %}
+                {{ spec }}<br/>
+                {% endfor %}
                 {% endif %}
                 {% if not specifications_present %}
                 {{ consts.NO_SPECS_AVAIL }}
                 {% endif %}
             </p>
             {% endif %}
-            <p><a href="https://pastebin.com/KBzyn33B">FAQ</a></p>
+            <p><a href="{{ faq_page }}">FAQ</a></p>
         </div>
     </body>
 </html>

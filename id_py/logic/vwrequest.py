@@ -192,12 +192,12 @@ class PropertyGetter:
         self.details: dict = json.loads(res.text)
         self.success = res.status_code == 200
 
-    
+
     def make_request(self, base_url: str) -> requests.Response:
         response = requests.get(base_url +  f'{self.prefix}{self.number.number}',
             headers={'Authorization': f'Bearer {self.token.token}'})
         return response
-    
+
 
     # method to return the text to show (vin if present, subs otherwise)
     def show(self) -> str:
@@ -214,7 +214,8 @@ class PropertyGetter:
     # the first spec that includes the string is returned.
     # example: string = "Softwareverbund"
     def extract_from_specs(self, string: str):
-        filter_lambda = lambda x : string in x.get('codeText')
+        string = string.lower()
+        filter_lambda = lambda x : string in str(x.get('codeText')).lower()
         specs_dict: dict = self.details.get('specifications')
         try:
             return list(filter(filter_lambda, specs_dict))[0].get('codeText')

@@ -25,17 +25,20 @@ class UrlConsts:
     LOGIN_FORM_MAIL_ENTRY_POINT = \
     'https://identity.vwgroup.io/signin-service/v1/' + \
     '4fb52a96-2ba3-4f99-a3fc-583bb197684b@apps_vw-dilab_com/login/identifier'
-    
+
     # password submission page
     LOGIN_FORM_PASSWORD_ENTRY_POINT = \
     'https://identity.vwgroup.io/signin-service/v1/4fb52a96-2ba3-4f99-a3fc-583bb197684b@apps_vw-dilab_com/' + \
     'login/authenticate'
-    
+
     # token api
     TOKEN_URL = 'https://www.volkswagen.de/app/authproxy/vw-de/tokens'
 
     # test url for token testing. the vin AF1234 definitely exists.
     TOKEN_TEST_URL = 'https://myvw-gvf-proxy.apps.emea.vwapps.io/vehicleData/de-DE/1852021AF1234'
+
+    # faq page
+    FAQ_URL = 'https://pastebin.com/KBzyn33B'
 
 #class end
 

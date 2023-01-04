@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpRequest
 from django.template import loader
 from .models import Token, Quote, Request
 from .logic.vwrequest import TokenReceiver, PropertyGetter, TokenTester
-from .logic.consts import HtmlConsts
+from .logic.consts import HtmlConsts, UrlConsts
 from .config import Config
 from .logic.commissionnumber import CommissionNumber
 
@@ -29,7 +29,7 @@ def number(request: HttpRequest, number: str):
     if token == None or TokenTester(token).test() == False:
         token: Token = TokenReceiver().main()
         token.save()
-    
+
     # load properties
     properties = PropertyGetter(token, commission_number)
     properties.load()
@@ -44,6 +44,9 @@ def number(request: HttpRequest, number: str):
     # generate a random quote
     random_quote = Quote.random_quote()
 
+    selected_specs_non_filtered: list = map(properties.extract_from_specs, Config.SELECTED_SPECS)
+    selected_specs = filter(lambda x: x != None, selected_specs_non_filtered)
+
     # define template context
     context = { 'show': show, 
                 'quote': random_quote if random_quote != None else HtmlConsts.NO_QUOTE_FOUND, 
@@ -52,16 +55,18 @@ def number(request: HttpRequest, number: str):
                 'engine': properties.details.get('engine'),
                 'model_year': properties.details.get('modelYear'),
                 'specifications_present': are_there_specs,
-                'software': properties.extract_from_specs('Softwareverbund'),
-                'fertigungsablauf': properties.extract_from_specs('Fertigungsablauf')
+                'selected_specs': selected_specs,
+                'faq_page': UrlConsts.FAQ_URL
                 }
-    
+
     # create and return response
     return HttpResponse(
         template.render(context)
     )
 
 
+# concise endpoint /<number>/concise
+# returns True of vin present, False otherwise
 def number_concise(request: HttpRequest, number: str):
     try:
         commission_number = CommissionNumber(number)
@@ -78,11 +83,11 @@ def number_concise(request: HttpRequest, number: str):
     if TokenTester(token).test() == False:
         token: Token = TokenReceiver().main()
         token.save()
-    
+
     # load properties
     properties = PropertyGetter(token, commission_number)
     properties.load()
-    
+
     # create and return response
     return HttpResponse(
         str(properties.data.get('vin') != None)
