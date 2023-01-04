@@ -214,7 +214,8 @@ class PropertyGetter:
     # the first spec that includes the string is returned.
     # example: string = "Softwareverbund"
     def extract_from_specs(self, string: str):
-        filter_lambda = lambda x : string in x.get('codeText')
+        string = string.lower()
+        filter_lambda = lambda x : string in str(x.get('codeText')).lower()
         specs_dict: dict = self.details.get('specifications')
         try:
             return list(filter(filter_lambda, specs_dict))[0].get('codeText')

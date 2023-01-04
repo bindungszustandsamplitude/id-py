@@ -44,6 +44,9 @@ def number(request: HttpRequest, number: str):
     # generate a random quote
     random_quote = Quote.random_quote()
 
+    selected_specs_non_filtered: list = map(properties.extract_from_specs, Config.SELECTED_SPECS)
+    selected_specs = filter(lambda x: x != None, selected_specs_non_filtered)
+
     # define template context
     context = { 'show': show, 
                 'quote': random_quote if random_quote != None else HtmlConsts.NO_QUOTE_FOUND, 
@@ -52,8 +55,7 @@ def number(request: HttpRequest, number: str):
                 'engine': properties.details.get('engine'),
                 'model_year': properties.details.get('modelYear'),
                 'specifications_present': are_there_specs,
-                'software': properties.extract_from_specs('Softwareverbund'),
-                'fertigungsablauf': properties.extract_from_specs('Fertigungsablauf'),
+                'selected_specs': selected_specs,
                 'faq_page': UrlConsts.FAQ_URL
                 }
 
