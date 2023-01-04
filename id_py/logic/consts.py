@@ -7,6 +7,7 @@ class HtmlConsts:
     SAD_MESSAGE = 'Leider nein, sorry :('
     DISCLAIMER = 'Aktuell funktioniert dieses Tool nur für Kommissionsnummern < AJ2728.'
     NO_CAR_FOUND = 'Leider kann zu dieser Kommissionsnummer kein Eintrag gefunden werden.'
+    NO_QUOTE_FOUND = 'Leider sind noch keine Zitate in der Datenbank gespeichert.'
 
 # class end
 

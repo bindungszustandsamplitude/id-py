@@ -26,7 +26,7 @@ def number(request: HttpRequest, number: str):
     token = Token.get_last()
 
     # if token is invalid, create a new one
-    if TokenTester(token).test() == False:
+    if token == None or TokenTester(token).test() == False:
         token: Token = TokenReceiver().main()
         token.save()
     
@@ -41,9 +41,12 @@ def number(request: HttpRequest, number: str):
     # generate what to show
     show = properties.show()
 
+    # generate a random quote
+    random_quote = Quote.random_quote()
+
     # define template context
     context = { 'show': show, 
-                'quote': Quote.random_quote(), 
+                'quote': random_quote if random_quote != None else HtmlConsts.NO_QUOTE_FOUND, 
                 'consts': HtmlConsts(),
                 'car': properties.data.get('modelName'),
                 'engine': properties.details.get('engine'),
