@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpRequest
 from django.template import loader
 from .models import Token, Quote, Request
 from .logic.vwrequest import TokenReceiver, PropertyGetter, TokenTester
-from .logic.consts import HtmlConsts
+from .logic.consts import HtmlConsts, UrlConsts
 from .config import Config
 from .logic.commissionnumber import CommissionNumber
 
@@ -29,7 +29,7 @@ def number(request: HttpRequest, number: str):
     if token == None or TokenTester(token).test() == False:
         token: Token = TokenReceiver().main()
         token.save()
-    
+
     # load properties
     properties = PropertyGetter(token, commission_number)
     properties.load()
@@ -53,15 +53,18 @@ def number(request: HttpRequest, number: str):
                 'model_year': properties.details.get('modelYear'),
                 'specifications_present': are_there_specs,
                 'software': properties.extract_from_specs('Softwareverbund'),
-                'fertigungsablauf': properties.extract_from_specs('Fertigungsablauf')
+                'fertigungsablauf': properties.extract_from_specs('Fertigungsablauf'),
+                'faq_page': UrlConsts.FAQ_URL
                 }
-    
+
     # create and return response
     return HttpResponse(
         template.render(context)
     )
 
 
+# concise endpoint /<number>/concise
+# returns True of vin present, False otherwise
 def number_concise(request: HttpRequest, number: str):
     try:
         commission_number = CommissionNumber(number)
@@ -78,11 +81,11 @@ def number_concise(request: HttpRequest, number: str):
     if TokenTester(token).test() == False:
         token: Token = TokenReceiver().main()
         token.save()
-    
+
     # load properties
     properties = PropertyGetter(token, commission_number)
     properties.load()
-    
+
     # create and return response
     return HttpResponse(
         str(properties.data.get('vin') != None)

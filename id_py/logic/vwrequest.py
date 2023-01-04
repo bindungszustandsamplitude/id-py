@@ -192,12 +192,12 @@ class PropertyGetter:
         self.details: dict = json.loads(res.text)
         self.success = res.status_code == 200
 
-    
+
     def make_request(self, base_url: str) -> requests.Response:
         response = requests.get(base_url +  f'{self.prefix}{self.number.number}',
             headers={'Authorization': f'Bearer {self.token.token}'})
         return response
-    
+
 
     # method to return the text to show (vin if present, subs otherwise)
     def show(self) -> str:
