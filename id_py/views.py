@@ -49,7 +49,7 @@ def number(request: HttpRequest, number: str):
 
     try:
         spec_config_file: TextIOWrapper = open(Config.SPEC_CONFIG_LOCATION, 'r')
-        spec_config_non_filtered: list[str] = spec_config_file.read().split()
+        spec_config_non_filtered: list[str] = spec_config_file.read().split('\n')
         spec_config = filter(lambda x: x != '' and x != None, spec_config_non_filtered)
         spec_config_file.close()
     except FileNotFoundError:
