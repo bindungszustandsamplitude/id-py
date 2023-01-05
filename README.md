@@ -12,7 +12,7 @@ No, I am not. Logging into the website is boring, takes a lot of time and the ce
 No elementary particle physics here (although I actually _am_ an elementary particle physicist, he he he hm - \*starres bashfully into the corner\*), but just the automization of veeeeeery time-consuming things. I guess, the time I spent doing this tool exceeds the time I will spend in total in order to retrieve the information about my ordered car, but I hope it saves _you_ a lot of time.
 
 
-## I am very interested in what the application is actually working. How can I understand that quite quickly?
+## I am very interested in how the application is actually working. How can I understand that quite quickly?
 
 I recommend two code files:
 * If you are interested in the general workflow: `views.py`. Look into the function `number()` and read the comments.
@@ -46,8 +46,9 @@ On Windows machines: perform the steps of the script manually.
    ```bash
    export VW_LOGIN_EMAIL=<email-address>
    export VW_LOGIN_PASSWORD=<password>
+   export SPEC_CONFIG_LOCATION=<spec-config-location>
    ```
-   Fill the fillers. Use your own credentials or just create a new account if you want to stay more "anonymous".
+   Fill the fillers. Use your own credentials or just create a new account if you want to stay more "anonymous". The `<spec-config-location>` is the absolute path of your spec config file (see below).
 3. Start the server by typing the command
     ```
     python3 manage.py runserver <port>
@@ -71,10 +72,22 @@ On Windows machines: perform the steps of the script manually.
 ## How do I configure the application?
 
 For this, feel free to modify the following files:
-* `config.py`: basic configuration - logging and spec selection
+* `config.py`: basic configuration
 * `number_template.html`: the html template of the site
 * `consts.py`: modify constants such as literals used in the html template.
+* create a spec config file (see below)
 * the rest of the source code for special things, of course
+
+
+## How do I create a spec configuration?
+
+The spec config defines the VW specs you are viewing ("Ausstattungsmerkmale"). It's a file of new-line-separated substrings of specs. One example for the spec file is the following:
+```
+assistenzpaket
+fertigungsablauf
+head-up
+```
+It will look case-insensitively for superstrings of those entries and show the first one that is found on the website. The application does not have to restart by changing the file. As told before, you have to refer to the absolute path of you spec config by setting the environment variable `SPEC_CONFIG_LOCATION`.
 
 
 ## I found an issue. How can I contact you?

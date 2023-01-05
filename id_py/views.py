@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpRequest
 from django.template import loader
+from io import TextIOWrapper
 from .models import Token, Quote, Request
 from .logic.vwrequest import TokenReceiver, PropertyGetter, TokenTester
 from .logic.consts import HtmlConsts, UrlConsts
@@ -44,7 +45,17 @@ def number(request: HttpRequest, number: str):
     # generate a random quote
     random_quote = Quote.random_quote()
 
-    selected_specs_non_filtered: list = map(properties.extract_from_specs, Config.SELECTED_SPECS)
+    spec_config = []
+
+    try:
+        spec_config_file: TextIOWrapper = open(Config.SPEC_CONFIG_LOCATION, 'r')
+        spec_config_non_filtered: list[str] = spec_config_file.read().split('\n')
+        spec_config = filter(lambda x: x != '' and x != None, spec_config_non_filtered)
+        spec_config_file.close()
+    except FileNotFoundError:
+        pass
+
+    selected_specs_non_filtered: list = map(properties.extract_from_specs, spec_config)
     selected_specs = filter(lambda x: x != None, selected_specs_non_filtered)
 
     # define template context
@@ -52,6 +63,7 @@ def number(request: HttpRequest, number: str):
                 'quote': random_quote if random_quote != None else HtmlConsts.NO_QUOTE_FOUND, 
                 'consts': HtmlConsts(),
                 'car': properties.data.get('modelName'),
+                'color': properties.details.get('exteriorColorText'),
                 'engine': properties.details.get('engine'),
                 'model_year': properties.details.get('modelYear'),
                 'specifications_present': are_there_specs,
