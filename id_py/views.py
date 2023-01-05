@@ -63,6 +63,7 @@ def number(request: HttpRequest, number: str):
                 'quote': random_quote if random_quote != None else HtmlConsts.NO_QUOTE_FOUND, 
                 'consts': HtmlConsts(),
                 'car': properties.data.get('modelName'),
+                'color': properties.details.get('exteriorColorText'),
                 'engine': properties.details.get('engine'),
                 'model_year': properties.details.get('modelYear'),
                 'specifications_present': are_there_specs,
