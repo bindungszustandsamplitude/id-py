@@ -1,4 +1,5 @@
 import logging
+import os
 
 class Config:
     # enables request logging -> persist every external request in embedded database
@@ -7,15 +8,11 @@ class Config:
     # global log level
     logging.basicConfig(level=logging.WARN)
 
-    # selected specs
-    # just append another key that is _included_ in the spec you search for. case-insensitive.
-    # example: appending 'head-up' may yield 'Ohne Head-Up Display'
-    # another example: appending 'modelljahr' may yield 'VWD Modelljahreswechsel'
-    # 
-    SELECTED_SPECS: list[str] = [
-        'Softwareverbund',
-        'Fertigungsablauf',
-        'Assistenzpaket',
-        'Head-Up',
-        'Modelljahr',
-    ]
+    # location of the spec file. every spec comes into a new line. put a substring of a desired spec into every new line.
+    # example for a spec config:
+    # softwareverbund
+    # fertigungsablauf
+    # -> both properties will be shown if found. if nothing found, nothing will be shown
+    SPEC_CONFIG_LOCATION = os.getenv('SPEC_CONFIG_LOCATION')
+
+# class end
