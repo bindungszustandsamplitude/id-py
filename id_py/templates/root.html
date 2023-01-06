@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <script>
+            function search() {
+                num = document.getElementById("com_num").value
+                window.location.href += num
+            }
+
+            function searchByEnter() {
+                if (event.key == 'Enter') {
+                    search()
+                }
+            }
+        </script>
+        <style>
+            .all {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+        </style>
+    </head>
+
+    <body class="all">
+        <div> {{ please_enter }} </div> <br/>
+        <input id="com_num" type="text" maxlength="6" minlength="6" onkeydown="searchByEnter()" />
+        <button id="button" type="button" onclick="search()">Suchen</button>
+        <br/><br/>
+        <a href="{{ url_consts.GITHUB_URL }}" target="_blank">GitHub</a>
+        <br/>
+        <a href="{{ url_consts.FAQ_URL }}" target="_blank">FAQ</a>
+    </body>
+
+</html>

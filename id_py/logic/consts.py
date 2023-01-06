@@ -8,6 +8,7 @@ class HtmlConsts:
     DISCLAIMER = 'Aktuell funktioniert dieses Tool nur für Kommissionsnummern < AJ2728.'
     NO_CAR_FOUND = 'Leider kann zu dieser Kommissionsnummer kein Eintrag gefunden werden.'
     NO_QUOTE_FOUND = 'Leider sind noch keine Zitate in der Datenbank gespeichert.'
+    PLEASE_ENTER_COMM_NO = 'Bitte eine Kommissionsnummer eingeben, z.B. AF1234.'
 
 # class end
 
@@ -39,6 +40,9 @@ class UrlConsts:
 
     # faq page
     FAQ_URL = 'https://pastebin.com/KBzyn33B'
+
+    # github url
+    GITHUB_URL = 'https://github.com/bindungszustandsamplitude/id-py'
 
 #class end
 
