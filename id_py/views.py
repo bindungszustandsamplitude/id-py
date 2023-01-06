@@ -8,6 +8,15 @@ from .config import Config
 from .logic.commissionnumber import CommissionNumber
 
 
+# root/index page
+def root(request: HttpRequest):
+    template = loader.get_template('root.html')
+    return HttpResponse(template.render({
+        'please_enter': HtmlConsts.PLEASE_ENTER_COMM_NO,
+        'url_consts': UrlConsts()
+        }))
+
+
 # the number endpoint /<number>
 # example: /AF1234
 def number(request: HttpRequest, number: str):

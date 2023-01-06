@@ -18,6 +18,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', view=views.root, name='root'),
     path('<str:number>', view=views.number, name='vin'),
     path('<str:number>/concise', view=views.number_concise, name='vin-concise'),
 ]
