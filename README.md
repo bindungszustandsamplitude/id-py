@@ -25,6 +25,7 @@ An instance is currently actively running on
 https://habe-ich-eine-fin.nsanto.de
 
 Use the following endpoints:
+* interactive index page: `https://<BASE_URL>`
 * verbose view: `https://<BASE_URL>/<commission_number>`
 * only a concise flag if a vin exists: `https://<BASE_URL>/<commission_number>/concise`
 
