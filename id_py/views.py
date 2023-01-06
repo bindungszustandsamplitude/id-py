@@ -71,13 +71,13 @@ def number(request: HttpRequest, number: str):
     context = { 'show': show, 
                 'quote': random_quote if random_quote != None else HtmlConsts.NO_QUOTE_FOUND, 
                 'consts': HtmlConsts(),
+                'url_consts': UrlConsts(),
                 'car': properties.data.get('modelName'),
                 'color': properties.details.get('exteriorColorText'),
                 'engine': properties.details.get('engine'),
                 'model_year': properties.details.get('modelYear'),
                 'specifications_present': are_there_specs,
                 'selected_specs': selected_specs,
-                'faq_page': UrlConsts.FAQ_URL
                 }
 
     # create and return response
