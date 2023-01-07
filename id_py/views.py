@@ -6,11 +6,12 @@ from .logic.vwrequest import TokenReceiver, PropertyGetter, TokenTester
 from .logic.consts import HtmlConsts, UrlConsts
 from .config import Config
 from .logic.commissionnumber import CommissionNumber
+from .logic.lock import LockDetector, Lock
 
 
 # root/index page
 def root(request: HttpRequest):
-    template = loader.get_template('root.html')
+    template = loader.get_template(UrlConsts.TPL_INDEX)
     return HttpResponse(template.render({
         'please_enter': HtmlConsts.PLEASE_ENTER_COMM_NO,
         'url_consts': UrlConsts()
@@ -24,13 +25,23 @@ def number(request: HttpRequest, number: str):
     try:
         commission_number = CommissionNumber(number)
     except CommissionNumber.CommissionNumberError:
-        return HttpResponse('Malformed commission number.')
+        return HttpResponse(HtmlConsts.MALFORMED_COMM_NO)
+
+    lock: Lock = LockDetector().detect_lock(commission_number)
+    if lock != None:
+        template = loader.get_template(UrlConsts.TPL_LOCKED)
+        return HttpResponse(
+            template.render({
+                'message': lock.message,
+                'faq_url': UrlConsts.FAQ_URL
+            })
+        )
 
     if Config.request_logging_enabled:
         Request.persist(commission_number)
 
     # load the html template
-    template = loader.get_template('number_template.html')
+    template = loader.get_template(UrlConsts.TPL_NUMBER)
 
     # get the youngest token from the db
     token = Token.get_last()
@@ -92,7 +103,17 @@ def number_concise(request: HttpRequest, number: str):
     try:
         commission_number = CommissionNumber(number)
     except CommissionNumber.CommissionNumberError:
-        return HttpResponse('Malformed commission number.')
+        return HttpResponse(HtmlConsts.MALFORMED_COMM_NO)
+
+    lock: Lock = LockDetector().detect_lock(commission_number)
+    if lock != None:
+        template = loader.get_template(UrlConsts.TPL_LOCKED)
+        return HttpResponse(
+            template.render({
+                'message': lock.message,
+                'faq_url': UrlConsts.FAQ_URL
+            })
+        )
 
     if Config.request_logging_enabled:
         Request.persist(commission_number)
