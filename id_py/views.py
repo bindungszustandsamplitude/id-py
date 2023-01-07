@@ -6,6 +6,7 @@ from .logic.vwrequest import TokenReceiver, PropertyGetter, TokenTester
 from .logic.consts import HtmlConsts, UrlConsts
 from .config import Config
 from .logic.commissionnumber import CommissionNumber
+from .logic.lock import LockDetector, Lock
 
 
 # root/index page
@@ -25,6 +26,16 @@ def number(request: HttpRequest, number: str):
         commission_number = CommissionNumber(number)
     except CommissionNumber.CommissionNumberError:
         return HttpResponse('Malformed commission number.')
+
+    lock: Lock = LockDetector().detect_lock(commission_number)
+    if lock != None:
+        template = loader.get_template('locked.html')
+        return HttpResponse(
+            template.render({
+                'message': lock.message,
+                'faq_url': UrlConsts.FAQ_URL
+            })
+        )
 
     if Config.request_logging_enabled:
         Request.persist(commission_number)
@@ -93,6 +104,16 @@ def number_concise(request: HttpRequest, number: str):
         commission_number = CommissionNumber(number)
     except CommissionNumber.CommissionNumberError:
         return HttpResponse('Malformed commission number.')
+
+    lock: Lock = LockDetector().detect_lock(commission_number)
+    if lock != None:
+        template = loader.get_template('locked.html')
+        return HttpResponse(
+            template.render({
+                'message': lock.message,
+                'faq_url': UrlConsts.FAQ_URL
+            })
+        )
 
     if Config.request_logging_enabled:
         Request.persist(commission_number)
