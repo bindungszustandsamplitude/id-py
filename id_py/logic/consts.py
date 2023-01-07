@@ -9,6 +9,7 @@ class HtmlConsts:
     NO_CAR_FOUND = 'Leider kann zu dieser Kommissionsnummer kein Eintrag gefunden werden.'
     NO_QUOTE_FOUND = 'Leider sind noch keine Zitate in der Datenbank gespeichert.'
     PLEASE_ENTER_COMM_NO = 'Bitte eine Kommissionsnummer eingeben, z.B. AF1234.'
+    MALFORMED_COMM_NO = 'Malformed commission number.'
 
 # class end
 
@@ -43,6 +44,12 @@ class UrlConsts:
 
     # github url
     GITHUB_URL = 'https://github.com/bindungszustandsamplitude/id-py'
+
+    # template names
+    TPL_INDEX = 'root_template.html'
+    TPL_NUMBER = 'number_template.html'
+    TPL_LOCKED = 'locked_template.html'
+
 
 #class end
 
