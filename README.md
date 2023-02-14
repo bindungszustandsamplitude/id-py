@@ -1,6 +1,9 @@
 # id-py
 A simple tool to retrieve the information of a ordered car at Volkswagen based on the commission number without logging into the MyVolkswagen website.
 
+## Legal notice
+This tool is only for private use. Making it available for others or exposing it to the internet is not envisaged.
+
 ## Wait a minute. How do you manage to retrieve this data without logging in? Are you a hacker?
 No, I am not. Logging into the website is boring, takes a lot of time and the certainty to read "FIN noch nicht bekannt" gets more and more depressing after time. This program _automates_ this whole process. It effectively does exactly the same that you would do, but much faster, without clicking buttons, without executing all the JavaScript code. The functionality is summarized very simple:
 
@@ -20,9 +23,6 @@ I recommend two code files:
 
 
 ## How can I use this tool without installing it on my own machine?
-
-An instance is currently actively running on  
-https://habe-ich-eine-fin.nsanto.de
 
 Use the following endpoints:
 * interactive index page: `https://<BASE_URL>`
@@ -67,7 +67,6 @@ On Windows machines: perform the steps of the script manually.
 * provide a unique `SECRET_KEY`.
 * set the debug mode to false when you go into "production".
 * when debug mode is false, provide your allowed hosts to `ALLOWED_HOSTS`, for example `localhost` for a local environment.
-* use a web server such as `nginx` or `apache2` if you want to expose your application to the internet.
 
 
 ## How do I configure the application?
